@@ -208,7 +208,7 @@ class DoManager(object):
         if port: params['port'] = port
         if weight: params['weight'] = port
         json = self.request('/domains/%s/records/new/' % domain_id, params)
-        return json['domain_record']
+        return json['domain_record'] if 'domain_record' in json else json['record']  # DO API docs say 'domain_record', but actually it 'record'
 
     def show_domain_record(self, domain_id, record_id):
         json = self.request('/domains/%s/records/%s' % (domain_id, record_id))
